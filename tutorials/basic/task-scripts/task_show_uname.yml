@@ -6,8 +6,10 @@ image_resource:
   source: {repository: busybox}
 
 inputs:
-- name: resource-tutorial
+- name: resource-tutorial-input
+
+outputs:
+- name: output_dir
 
 run:
   path: ./resource-tutorial/tutorials/basic/task-scripts/task_show_uname.sh
-

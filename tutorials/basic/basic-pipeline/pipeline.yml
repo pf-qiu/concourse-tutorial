@@ -1,14 +1,29 @@
 ---
+resources:
+- name: resource-tutorial
+  type: git
+  source:
+    uri: https://github.com/pf-qiu/concourse-tutorial.git
+    branch: master
+
+- name: s3_output
+  type: s3
+  source:
+    access_key_id: {{bucket-access-key-id}}
+    bucket: {{bucket-name}}
+    region_name: {{aws-region}}
+    secret_access_key: {{bucket-secret-access-key}}
+    versioned_file: test_output.txt
+
 jobs:
 - name: job-hello-world
-  public: true
   plan:
+  - get: resource-tutorial-input
+    resource: resource-tutorial
+    trigger: true
   - task: hello-world
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source: {repository: busybox}
-      run:
-        path: echo
-        args: [hello world]
+    file: resource-tutorial/tutorials/basic/task-scripts/task_show_uname.yml
+  - put: resource-tutorial-output
+    resource: s3_output
+    params:
+       file: output_dir/test_output.txt
