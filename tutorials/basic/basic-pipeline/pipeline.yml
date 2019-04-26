@@ -18,12 +18,11 @@ resources:
 jobs:
 - name: job-hello-world
   plan:
-  - get: resource-tutorial-input
-    resource: resource-tutorial
+  - get: resource-tutorial
     trigger: true
   - task: hello-world
     file: resource-tutorial/tutorials/basic/task-scripts/task_show_uname.yml
   - put: resource-tutorial-output
     resource: s3_output
     params:
-       file: output_dir/test_output.txt
+      file: output_dir/test_output.txt

@@ -1,4 +1,4 @@
 #!/bin/sh
 
 uname -a
-cat /proc/cpuinfo
+cat /proc/cpuinfo > output_dir/test_output.txt
